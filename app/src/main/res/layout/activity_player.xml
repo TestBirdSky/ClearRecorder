@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gr_bg_100"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+
+        android:id="@+id/pgA"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <ImageButton
+       android:id="@+id/back"
+                android:src="@mipmap/back"
+                android:background="@android:color/transparent"
+                android:layout_width="72dp"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+        <Space
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
+        <TextView
+            android:id="@+id/timeCountTv"
+            android:text="00:00"
+            android:textSize="34sp"
+            android:fontFamily="sans-serif-black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <FrameLayout
+            android:layout_marginTop="28dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:src="@mipmap/home_center_0"
+                android:layout_height="match_parent"></androidx.appcompat.widget.AppCompatImageView>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:src="@mipmap/home_center_1"
+                android:layout_height="match_parent"></androidx.appcompat.widget.AppCompatImageView>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:src="@mipmap/home_center_2"
+                android:layout_height="match_parent"></androidx.appcompat.widget.AppCompatImageView>
+
+        </FrameLayout>
+        <TextView
+            android:id="@+id/name"
+            android:text="Home"
+            android:layout_marginTop="16dp"
+            android:textSize="16sp"
+            android:textColor="#FF242424"
+            android:fontFamily="serif"
+            android:textStyle="italic|bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:layout_width="match_parent"
+            android:id="@+id/seekbar"
+            android:layout_height="wrap_content"></androidx.appcompat.widget.AppCompatSeekBar>
+        <TextView
+            android:id="@+id/allTimeTv"
+            android:text="00:00"
+            android:layout_marginEnd="20dp"
+            android:layout_gravity="end"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Space
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+            <Space
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="0dp"></Space>
+            <TextView
+                android:id="@+id/sp05"
+                android:fontFamily="serif"
+                android:textColor="@color/white"
+                android:backgroundTint="#FFE5A125"
+                android:background="@drawable/round"
+                android:textStyle="italic|bold"
+                android:gravity="center"
+                android:layout_width="48dp"
+                android:text="X0.5"
+                android:layout_height="match_parent"></TextView>
+            <Space
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="0dp"></Space>
+            <TextView
+                android:id="@+id/sp10"
+                android:fontFamily="serif"
+                android:textColor="@color/white"
+                android:backgroundTint="#FF2A2823"
+                android:background="@drawable/round"
+                android:textStyle="italic|bold"
+                android:gravity="center"
+                android:layout_width="48dp"
+                android:text="X1.0"
+                android:layout_height="match_parent"></TextView>
+            <Space
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="0dp"></Space>
+            <TextView
+                android:id="@+id/sp15"
+                android:fontFamily="serif"
+                android:textColor="@color/white"
+                android:backgroundTint="#FFE5A125"
+                android:background="@drawable/round"
+                android:textStyle="italic|bold"
+                android:gravity="center"
+                android:layout_width="48dp"
+                android:text="X1.5"
+                android:layout_height="match_parent"></TextView>
+            <Space
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="0dp"></Space>
+            <TextView
+                android:id="@+id/sp20"
+                android:fontFamily="serif"
+                android:textColor="@color/white"
+                android:backgroundTint="#FFE5A125"
+                android:background="@drawable/round"
+                android:textStyle="italic|bold"
+                android:gravity="center"
+                android:layout_width="48dp"
+                android:text="X2.0"
+                android:layout_height="match_parent"></TextView>
+            <Space
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="0dp"></Space>
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="158dp"
+            android:id="@+id/stateBg"
+            android:background="@mipmap/m_record_bg"
+            android:layout_height="158dp">
+
+            <ImageView
+                android:id="@+id/state"
+                android:layout_gravity="center"
+                android:background="@mipmap/m_start"
+                android:layout_width="64dp"
+                android:layout_height="64dp"/>
+        </FrameLayout>
+
+        <Space
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

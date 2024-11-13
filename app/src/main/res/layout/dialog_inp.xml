@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".MainActivity">
+
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="12dp"
+        android:layout_marginHorizontal="29dp"
+        app:cardBackgroundColor="#FFFFC962"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/title"
+                tools:text="Save recording"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:textSize="14sp"
+                android:textColor="#FF242424"
+                android:layout_marginTop="17dp"
+                android:fontFamily="sans-serif-black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+           <androidx.cardview.widget.CardView
+               android:layout_marginHorizontal="16dp"
+               app:cardCornerRadius="8dp"
+               android:layout_marginTop="18dp"
+               app:cardElevation="0dp"
+               android:layout_width="match_parent"
+               app:cardBackgroundColor="#FFFFDD9A"
+               android:layout_height="45dp">
+               <androidx.appcompat.widget.AppCompatEditText
+                   android:id="@+id/input"
+                   tools:text="00:00"
+                   android:singleLine="true"
+                   android:paddingHorizontal="12dp"
+                   android:hint="Enter here..."
+                   android:layout_gravity="center_horizontal"
+                   android:textSize="14sp"
+                   android:background="@android:color/transparent"
+                   android:textColor="#FF242424"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"/>
+           </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="42dp">
+                <TextView
+                    android:id="@+id/leftTv"
+                    android:text="Save"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/black"
+                    android:gravity="center"
+                    android:background="@drawable/sh_r16"
+                    android:fontFamily="serif"
+                    android:textStyle="italic|bold"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"/>
+                <Space
+                    android:layout_width="14dp"
+                    android:layout_height="0dp"/>
+                <TextView
+                    android:id="@+id/rightTv"
+                    android:text="Cancel"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:backgroundTint="#FFF5B231"
+
+                    android:gravity="center"
+                    android:background="@drawable/sh_r16"
+                    android:fontFamily="serif"
+                    android:textStyle="italic|bold"
+
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>
