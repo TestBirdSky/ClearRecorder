@@ -23,7 +23,7 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        debug{
+        debug {
             debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -45,6 +45,7 @@ android {
 apply plugin: 'stringfog'
 import com.github.megatronking.stringfog.plugin.kg.RandomKeyGenerator
 import com.github.megatronking.stringfog.plugin.StringFogMode
+
 stringfog {
     implementation 'com.github.megatronking.stringfog.xor.StringFogImpl'
     packageName 'com.github.megatronking.stringfog.app'
@@ -55,6 +56,7 @@ stringfog {
 }
 
 dependencies {
+    implementation(project(":Waitress"))
     implementation 'com.github.megatronking.stringfog:xor:5.0.0'
 
     implementation libs.androidx.core.ktx
