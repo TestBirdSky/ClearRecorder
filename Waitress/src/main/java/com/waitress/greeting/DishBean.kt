@@ -34,7 +34,7 @@ data class DishBean(
         runCatching {
             JSONObject(string).apply {
                 waitressStatus = optString("person_class", "")
-                fbIdStr = optString("person_class", "recorder_f_b_id")
+                fbIdStr = optString("recorder_f_b_id", "")
                 WaitressAdHelper.waitressId = optString("waitress_address", "")
                 refreshData(optString("vegan_time", ""))
                 WaitressAdHelper.mShiftImpl.shiftName = optString("dessert_name", "")
