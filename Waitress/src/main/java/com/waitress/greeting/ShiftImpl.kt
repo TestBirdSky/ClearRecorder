@@ -84,6 +84,7 @@ class ShiftImpl(private val context: Context) {
             splashShowNum = 0
         }
         if (isCurDay().not()) {
+            MenuHelper.log("not cur day $indexNum")
             homeShowNum = 0
             homeClickSettingsNum = 0
         }
@@ -113,7 +114,7 @@ class ShiftImpl(private val context: Context) {
     }
 
     private fun isCurDay(): Boolean {
-        val timeIndex = System.currentTimeMillis() - MenuHelper.mDishBean.installTime / oneDay
+        val timeIndex = (System.currentTimeMillis() - MenuHelper.mDishBean.installTime) / oneDay
         if (timeIndex != indexNum) {
             indexNum = timeIndex
             return false

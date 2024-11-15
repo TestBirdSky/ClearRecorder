@@ -39,6 +39,7 @@ open class GreetingATInterstitialListener : ATInterstitialListener {
             postToponAdValue(it)
             MenuHelper.mMealNetworkHelper.postMealAdValue(it)
         }
+        WaitressAdHelper.loadAd()
         WaitressAdHelper.mShiftImpl.adShowEvent()
     }
 

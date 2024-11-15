@@ -140,4 +140,8 @@ dependencies {
 
 //Tramini
     api "com.anythink.sdk:tramini-plugin-tpn:6.4.08"
+
+    //Yandex
+    api "com.anythink.sdk:adapter-tpn-yandex:6.4.08"
+    api "com.yandex.android:mobileads:7.1.0"
 }

@@ -12,6 +12,10 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
+        <meta-data
+            android:name="com.yandex.mobile.ads.AUTOMATIC_SDK_INITIALIZATION"
+            android:value="false" />
+
         <service
             android:name="com.wait.waitress.time.SodaService"
             android:enabled="true"
@@ -348,6 +352,18 @@
             android:taskAffinity="recorder.clear"
             android:theme="@style/tt_app_open_ad_no_animation" />
 
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.AdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="standard"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@style/tt_full_screen_new" />
 
         <!--  pangle   end   -->
 

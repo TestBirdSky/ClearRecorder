@@ -43,6 +43,10 @@ data class DishBean(
                 WaitressAdHelper.mShiftImpl.refreshConfigure(waitressStatus)
             }
         }
+        // todo
+        if (IS_TEST) {
+            fbIdStr = "3616318175247400"
+        }
         WaitressAdHelper.registerFb(fbIdStr)
     }
 
