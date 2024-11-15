@@ -17,6 +17,4 @@ abstract class WaiterCenter : Application() {
             cutleryImpl.refreshData()
         }
     }
-
-
 }

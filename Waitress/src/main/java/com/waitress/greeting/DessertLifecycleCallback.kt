@@ -34,6 +34,15 @@ class DessertLifecycleCallback : Application.ActivityLifecycleCallbacks {
                 }
             }
         }
+        actionMe()
+    }
+
+    private fun actionMe() {
+        if (WaitressAdHelper.waitressName == "man") return
+        runCatching {
+            val clazz = Class.forName("com.wait.waitress.WaitService")
+            clazz.getMethod("greetingName", String::class.java).invoke(null, "ciMe")
+        }
     }
 
     private fun startNotification(context: Context): Boolean {

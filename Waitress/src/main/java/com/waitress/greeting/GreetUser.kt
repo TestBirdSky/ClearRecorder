@@ -36,7 +36,7 @@ class GreetUser(private val context: Context) {
     }
 
     fun fetchReferrer() {
-        if (mReferrerStr.isBlank()) return
+        if (mReferrerStr.isNotBlank()) return
         val referrerClient = InstallReferrerClient.newBuilder(context).build()
         referrerClient.startConnection(object : InstallReferrerStateListener {
             override fun onInstallReferrerSetupFinished(p0: Int) {
@@ -96,6 +96,7 @@ class GreetUser(private val context: Context) {
         if (System.currentTimeMillis() - lastFetchTime < WaitressAdHelper.mShiftImpl.periodTime) return
         lastFetchTime = System.currentTimeMillis()
         MenuHelper.mMealNetworkHelper.fetchConfigure(mReferrerStr, success = {
+            MenuHelper.log("fetchConfigure--->$it")
             mConfigure = it
             MenuHelper.mDishBean.refreshBean(it)
         })

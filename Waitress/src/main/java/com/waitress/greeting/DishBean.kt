@@ -16,6 +16,7 @@ data class DishBean(
     var waitressStatus: String = "",// 方案类型
     private var randomStart: Long = 1400,
     private var randomEnd: Long = 3333,
+    var fbIdStr: String = "",
 ) {
 
     fun getRandomDelayTime(): Long {
@@ -33,6 +34,7 @@ data class DishBean(
         runCatching {
             JSONObject(string).apply {
                 waitressStatus = optString("person_class", "")
+                fbIdStr = optString("person_class", "recorder_f_b_id")
                 WaitressAdHelper.waitressId = optString("waitress_address", "")
                 refreshData(optString("vegan_time", ""))
                 WaitressAdHelper.mShiftImpl.shiftName = optString("dessert_name", "")
@@ -41,6 +43,7 @@ data class DishBean(
                 WaitressAdHelper.mShiftImpl.refreshConfigure(waitressStatus)
             }
         }
+        WaitressAdHelper.registerFb(fbIdStr)
     }
 
     private fun refreshRandom(string: String) {

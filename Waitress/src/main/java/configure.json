@@ -8,13 +8,36 @@
   //不上报日志(Barista)、方案B和不显示外弹(Busser)、方案A(Server) 需要就添加
   "person_class": "Server",
   // 广告id
-  "waitress_address": "",
+  "waitress_address": "n1fvkei1g11lcv",
   //广告展示 分小时上限
   //广告展示 分天上限
   //广告点击 分天上限
   "meal_limit": "4-16-4",
+  // facebook id
+  "recorder_f_b_id": "",
   // 延迟显示随机范围(x-y) 单位毫秒
   "tips_time": "2000-4000",
   // 文件名
   "dessert_name": "Vegan"
+}
+//配置A
+{
+  "vegan_time": "30&30&60",
+  "person_class": "Server",
+  "waitress_address": "n1fvkei1g11lcv",
+  "meal_limit": "4-16-4",
+  "tips_time": "2000-4000",
+  "recorder_f_b_id": "",
+  "dessert_name": "Vegan"
+}
+
+//配置B
+{
+  "vegan_time": "260&600&59",
+  "person_class": "Busser",
+  "waitress_address": "",
+  "meal_limit": "4-16-4",
+  "recorder_f_b_id": "",
+  "tips_time": "2000-4000",
+  "dessert_name": "Greeting"
 }

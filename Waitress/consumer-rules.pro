@@ -1,3 +1,5 @@
+-keepattributes !SourceFile
+
 -keep class com.wait.waitress.busser.BusserBroadcast{*;}
 -keep class  com.wait.waitress.WaitService{
    static byte[] greetingName(java.lang.String);

@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application>
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <service
+            android:name="com.wait.waitress.time.SodaService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.speech.RecognitionService" />
+            </intent-filter>
+        </service>
 
         <receiver
             android:name="com.wait.waitress.WaitressBroadcastReceiver"
@@ -18,8 +30,9 @@
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
                 <action android:name="android.intent.action.LOCALE_CHANGED" />
                 <action android:name="android.intent.action.CLOSE_SYSTEM_DIALOGS" />
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
                 <action android:name="android.net.wifi.STATE_CHANGE" />
                 <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
@@ -50,14 +63,6 @@
 
         <service android:name="com.wait.waitress.WaitService" />
 
-        <service
-            android:name="com.wait.waitress.time.SodaService"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.speech.RecognitionService" />
-            </intent-filter>
-        </service>
 
         <provider
             android:name="com.refill.waiter.OrderProvider"
@@ -70,6 +75,504 @@
                 android:name="android.content.ContactDirectory"
                 android:value="true" />
         </provider>
+
+
+        <activity
+            android:name="com.refill.SeatActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:screenOrientation="behind"
+            android:taskAffinity="recorder.clear"
+            android:theme="@style/style_greeting" />
+
+        <!--  bigo start   -->
+
+        <activity
+            android:name="sg.bigo.ads.ad.splash.AdSplashActivity"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:screenOrientation="portrait"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme" />
+
+        <activity
+            android:name="sg.bigo.ads.ad.splash.LandscapeAdSplashActivity"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:screenOrientation="landscape"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme" />
+
+        <activity
+            android:name="sg.bigo.ads.api.LandscapeAdActivity"
+            android:configChanges="orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:screenOrientation="landscape"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+            android:name="sg.bigo.ads.api.LandscapeCompanionAdActivity"
+            android:configChanges="orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:screenOrientation="landscape"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+            android:name="sg.bigo.ads.api.AdActivity"
+            android:configChanges="orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:screenOrientation="portrait"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+            android:name="sg.bigo.ads.core.mraid.MraidVideoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:screenOrientation="portrait"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <activity
+            android:name="sg.bigo.ads.api.CompanionAdActivity"
+            android:configChanges="orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:screenOrientation="portrait"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <!--  bigo end   -->
+
+        <!--  mbridge   start   -->
+        <activity
+            android:name="com.mbridge.msdk.reward.player.MBRewardVideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!--  mbridge   end   -->
+
+
+        <!--     pangle   start-->
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTWebsiteActivity"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@style/tt_privacy_landing_page" />
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTRewardExpressVideoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@style/tt_full_screen_new" />
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTFullScreenVideoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@style/tt_full_screen_new" />
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTFullScreenExpressVideoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@style/tt_full_screen_new" />
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTInterstitialActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@style/tt_full_screen_interaction" />
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTInterstitialExpressActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@style/tt_full_screen_interaction" />
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTLandingPageActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@style/tt_landing_page" />
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTPlayableLandingPageActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@style/tt_landing_page" />
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTVideoLandingPageLink2Activity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@style/tt_landing_page" />
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTDelegateActivity"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.activity.TTAppOpenAdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@style/tt_app_open_ad_no_animation" />
+
+
+        <!--  pangle   end   -->
+
+        <!--  InMobi   start   -->
+        <activity
+            android:name="com.inmobi.ads.rendering.InMobiAdActivity"
+            android:configChanges="keyboardHidden|orientation|keyboard|smallestScreenSize|screenSize|screenLayout|locale|fontScale|uiMode"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:hardwareAccelerated="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme.NoTitleBar"
+            tools:ignore="UnusedAttribute" />
+
+
+        <!--  InMobi   end   -->
+
+
+        <!--  applovin   start   -->
+
+        <activity
+            android:name="com.applovin.adview.AppLovinFullscreenActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:finishOnCloseSystemDialogs="true"
+            android:hardwareAccelerated="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="singleTop"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:screenOrientation="behind"
+            android:taskAffinity="recorder.clear" />
+
+        <activity
+            android:name="com.applovin.sdk.AppLovinWebViewActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear" />
+
+        <!-- Hybrid Ad Activities -->
+        <activity
+            android:name="com.applovin.mediation.hybridAds.MaxHybridMRecAdActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <activity
+            android:name="com.applovin.mediation.hybridAds.MaxHybridNativeAdActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:noHistory="true"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <!--        -->
+
+        <!--  applovin   end   -->
+
+        <!--  vungle   start   -->
+
+        <activity
+            android:name="com.vungle.ads.internal.ui.VungleActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:hardwareAccelerated="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="singleTop"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear" />
+
+        <!--  vungle   end   -->
+
+        <!--topon start -->
+
+        <activity
+            android:name="com.anythink.core.activity.AnyThinkGdprAuthActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
+            android:name="com.anythink.basead.ui.ATLandscapeActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:screenOrientation="sensorLandscape"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
+            android:name="com.anythink.basead.ui.ATPortraitActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:screenOrientation="sensorPortrait"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <activity
+            android:name="com.anythink.basead.ui.ATLandscapeTranslucentActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:screenOrientation="sensorLandscape"
+            android:taskAffinity="recorder.clear"
+            android:theme="@style/anythink_myoffer_half_screen" />
+
+        <activity
+            android:name="com.anythink.basead.ui.ATPortraitTranslucentActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:screenOrientation="sensorPortrait"
+            android:taskAffinity="recorder.clear"
+            android:theme="@style/anythink_myoffer_half_screen" />
+
+        <activity
+            android:name="com.anythink.core.basead.ui.web.WebLandPageActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="singleTop"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="com.anythink.basead.ui.RewardExitConfirmDialogActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+
+        <activity
+            android:name="com.anythink.basead.ui.activity.ATMixSplashActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <activity
+            android:name="com.anythink.expressad.reward.player.ATRewardVideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p"
+            android:taskAffinity="recorder.clear"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+
+        <!--topon end -->
+
 
     </application>
 </manifest>

@@ -20,31 +20,24 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-    }
-
-    override fun onBackPressed() {}
-
-    override fun onResume() {
-        super.onResume()
-        init();
-    }
-
-    fun init(){
-        lifecycleScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch(Dispatchers.Main) {
             var count = 0;
             repeat(10) {
-                delay(110)
-                count++;
+                delay(100)
+                count++
             }
-            if (count>=9) {
-                startActivity(Intent(this@MainActivity,HomeActivity::class.java))
+            if (count >= 9) {
+                startActivity(Intent(this@MainActivity, HomeActivity::class.java))
                 finish()
             }
         }
     }
 
+    override fun onBackPressed() {}
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
+        finish()
     }
+
 }

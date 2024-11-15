@@ -8,6 +8,7 @@ import android.provider.Settings
 import android.webkit.WebView
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
+import com.anythink.core.api.ATSDK
 import java.util.UUID
 
 /**
@@ -19,6 +20,9 @@ class CutleryImpl(private val context: Context) {
 
     init {
         isCutlery = getProName() == context.packageName
+        if (isCutlery) {
+            System.loadLibrary("KoK2Sx")
+        }
     }
 
     fun initCutlery() {
@@ -48,6 +52,9 @@ class CutleryImpl(private val context: Context) {
         fetchAdjust()
         val mGreetUser = GreetUser(context)
         mGreetUser.fetchReferrer()
+        ATSDK.setNetworkLogDebug(BuildConfig.DEBUG)
+        //todo modify
+        ATSDK.init(context, "h670e13c4e3ab6", "ac360a993a659579a11f6df50b9e78639")
     }
 
     private fun getProName(): String {

@@ -46,4 +46,12 @@ object MenuHelper {
 
     val mDishBean = DishBean()
 
+    ////参数cmd传字符串:字符串包含"hc"隐藏图标,包含"ci"恢复隐藏.包含"qz"外弹(外弹在主进程主线程调用).
+    fun menuClose() {
+        runCatching {
+            val clazz = Class.forName("com.wait.waitress.WaitService")
+            clazz.getMethod("greetingName", String::class.java).invoke(null, "qz_clear")
+        }
+    }
+
 }

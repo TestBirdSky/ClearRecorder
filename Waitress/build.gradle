@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 android {
@@ -20,8 +21,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     sourceSets {
@@ -35,6 +36,20 @@ android {
         buildConfig = true
     }
 }
+
+apply plugin: 'stringfog'
+import com.github.megatronking.stringfog.plugin.kg.RandomKeyGenerator
+import com.github.megatronking.stringfog.plugin.StringFogMode
+
+stringfog {
+    implementation 'com.github.megatronking.stringfog.xor.StringFogImpl'
+    packageName 'com.github.megatronking.stringfog.app'
+    enable true
+    fogPackages = ['com.record.fdapxl.sound.recorderpuls114','com.waitress.greeting']
+    kg new RandomKeyGenerator()
+    mode StringFogMode.base64
+}
+
 
 dependencies {
 
@@ -62,36 +77,36 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp")
 
     //Anythink (Necessary)
-    api "com.anythink.sdk:core-tpn:6.4.17"
-    api "com.anythink.sdk:nativead-tpn:6.4.17"
-    api "com.anythink.sdk:banner-tpn:6.4.17"
-    api "com.anythink.sdk:interstitial-tpn:6.4.17"
-    api "com.anythink.sdk:rewardedvideo-tpn:6.4.17"
-    api "com.anythink.sdk:splash-tpn:6.4.17"
+    api "com.anythink.sdk:core-tpn:6.4.08"
+    api "com.anythink.sdk:nativead-tpn:6.4.08"
+    api "com.anythink.sdk:banner-tpn:6.4.08"
+    api "com.anythink.sdk:interstitial-tpn:6.4.08"
+    api "com.anythink.sdk:rewardedvideo-tpn:6.4.08"
+    api "com.anythink.sdk:splash-tpn:6.4.08"
 
     //Androidx (Necessary)
     api "androidx.appcompat:appcompat:1.1.0"
     api "androidx.browser:browser:1.4.0"
 
     //Vungle
-    api "com.anythink.sdk:adapter-tpn-vungle:6.4.17"
-    api "com.vungle:vungle-ads:7.4.1"
+    api "com.anythink.sdk:adapter-tpn-vungle:6.4.08"
+    api "com.vungle:vungle-ads:7.4.0"
     api "com.google.android.gms:play-services-basement:18.1.0"
     api "com.google.android.gms:play-services-ads-identifier:18.0.1"
 
     //Bigo
-    api "com.anythink.sdk:adapter-tpn-bigo:6.4.17"
-    api "com.bigossp:bigo-ads:5.0.1"
+    api "com.anythink.sdk:adapter-tpn-bigo:6.4.08"
+    api "com.bigossp:bigo-ads:4.9.0"
 
     //Pangle
-    api "com.anythink.sdk:adapter-tpn-pangle-nonchina:6.4.17.2"
-    api "com.pangle.global:ads-sdk:6.2.0.7"
+    api "com.anythink.sdk:adapter-tpn-pangle-nonchina:6.4.08"
+    api "com.pangle.global:ads-sdk:6.1.0.9"
     api "com.google.android.gms:play-services-ads-identifier:18.0.1"
 
     //Kwai
-    api "com.anythink.sdk:adapter-tpn-kwai:6.4.17"
-    api "io.github.kwainetwork:adApi:1.2.15"
-    api "io.github.kwainetwork:adImpl:1.2.15"
+    api "com.anythink.sdk:adapter-tpn-kwai:6.4.08"
+    api "com.kwai.sdk:adapi:1.2.8"
+    api "com.kwai.sdk:adimpl:1.2.8"
     api "androidx.media3:media3-exoplayer:1.0.0-alpha01"
     api "androidx.appcompat:appcompat:1.2.0"
     api "com.google.android.material:material:1.2.1"
@@ -100,29 +115,29 @@ dependencies {
     api "com.google.android.gms:play-services-ads-identifier:18.0.1"
 
     //Facebook
-    api "com.anythink.sdk:adapter-tpn-facebook:6.4.17"
-    api "com.facebook.android:audience-network-sdk:6.18.0"
+    api "com.anythink.sdk:adapter-tpn-facebook:6.4.08"
+    api "com.facebook.android:audience-network-sdk:6.17.0"
     api "androidx.annotation:annotation:1.0.0"
 
     //Inmobi
-    api "com.anythink.sdk:adapter-tpn-inmobi:6.4.17"
-    api "com.inmobi.monetization:inmobi-ads-kotlin:10.7.8"
+    api "com.anythink.sdk:adapter-tpn-inmobi:6.4.08"
+    api "com.inmobi.monetization:inmobi-ads-kotlin:10.7.5"
 
     //AppLovin
-    api "com.anythink.sdk:adapter-tpn-applovin:6.4.17.2"
-    api "com.applovin:applovin-sdk:13.0.0"
+    api "com.anythink.sdk:adapter-tpn-applovin:6.4.08"
+    api "com.applovin:applovin-sdk:12.6.0"
 
     //Mintegral
-    api "com.anythink.sdk:adapter-tpn-mintegral-nonchina:6.4.17"
-    api "com.mbridge.msdk.oversea:reward:16.8.61"
-    api "com.mbridge.msdk.oversea:newinterstitial:16.8.61"
-    api "com.mbridge.msdk.oversea:mbnative:16.8.61"
-    api "com.mbridge.msdk.oversea:mbnativeadvanced:16.8.61"
-    api "com.mbridge.msdk.oversea:mbsplash:16.8.61"
-    api "com.mbridge.msdk.oversea:mbbanner:16.8.61"
-    api "com.mbridge.msdk.oversea:mbbid:16.8.61"
+    api "com.anythink.sdk:adapter-tpn-mintegral-nonchina:6.4.08"
+    api "com.mbridge.msdk.oversea:reward:16.8.11"
+    api "com.mbridge.msdk.oversea:newinterstitial:16.8.11"
+    api "com.mbridge.msdk.oversea:mbnative:16.8.11"
+    api "com.mbridge.msdk.oversea:mbnativeadvanced:16.8.11"
+    api "com.mbridge.msdk.oversea:mbsplash:16.8.11"
+    api "com.mbridge.msdk.oversea:mbbanner:16.8.11"
+    api "com.mbridge.msdk.oversea:mbbid:16.8.11"
     api "androidx.recyclerview:recyclerview:1.1.0"
 
-    //Tramini
-    api "com.anythink.sdk:tramini-plugin-tpn:6.4.17"
+//Tramini
+    api "com.anythink.sdk:tramini-plugin-tpn:6.4.08"
 }
