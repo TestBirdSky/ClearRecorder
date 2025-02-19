@@ -1,8 +1,16 @@
-钟哥，麻烦提供一份上架GP的外弹 so代码。信息如下
-['com.record.test', 'com.clear.sound.voice.recorder.management',  # 包名
+//钟哥，麻烦提供一份上架GP的外弹 so代码。信息如下 T346
+['com.record.voice.test', 'com.track.trackeasyrecording.efficient',  # 包名
                'com.refill.SeatActivity',# 透明activity
                'com.wait.waitress.time.SodaService', # JobSchedulerService
                'com/wait/waitress/busser/BusserBroadcast',  #  广播
-               '','com.record.fdapxl.sound.recorderpuls114.MainActivity',  # 隐藏图标 other1","main2
+               '','com.record.sound.LauncherActivity',  # 隐藏图标 other1","main2
                'com/wait/waitress/WaitService', '"greetingName"',  # jni路径及函数
                '/Vegan'] # 外弹文件开关名
+// T346
+['com.record.voice.test', 'com.track.trackeasyrecording.efficient',  # 包名
+                  'com/waitress/greeting/WaitManager',
+                   '"manageInit"','"waitAny"', '"waiterAge"','"www"',
+                  'com/waitress/greeting/GreetHelper',  # hander
+                  'com/wait/waitress/WaitClient',  # wvcClass WebViewClient
+                  'com/refill/waiter/RefillClient',  # WccClass WebChromeClient
+                  '/Vegan']#文件开关

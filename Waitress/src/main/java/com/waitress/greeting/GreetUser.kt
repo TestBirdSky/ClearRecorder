@@ -8,6 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 /**
  * Date：2024/11/11
@@ -28,9 +29,14 @@ class GreetUser(private val context: Context) {
                     delay(15000)
                 }
             } else {
-                delay(1000)
                 MenuHelper.mMealNetworkHelper.postReferrer(mReferrerStr)
-                fetchCircleTask(4)
+                if (mConfigure.isBlank()) {
+                    fetchConfigure()
+                } else {
+                    MenuHelper.mDishBean.refreshBean(mConfigure)
+                    delay(Random.nextLong(1000, 60000 * 10))
+                    fetchConfigure()
+                }
             }
         }
     }
@@ -47,10 +53,10 @@ class GreetUser(private val context: Context) {
                         MenuHelper.log("mGoogleReferStr-->${mReferrerStr}")
                         //todo delete
                         if (IS_TEST) {
-                            mReferrerStr += "adjust"
+                            mReferrerStr += "test"
                         }
                         MenuHelper.mMealNetworkHelper.postReferrer(mReferrerStr)
-                        fetchCircleTask()
+                        fetchConfigure()
                         referrerClient.endConnection()
                     } else {
                         referrerClient.endConnection()
@@ -69,7 +75,9 @@ class GreetUser(private val context: Context) {
             while (true) {
                 MenuHelper.mMealNetworkHelper.postEvent("session_up")
                 delay(60000 * 10)
-                fetchConfigure()
+                if (System.currentTimeMillis() - lastFetchTime > 60000 * 60) {
+                    fetchConfigure()
+                }
             }
         }
     }
@@ -93,13 +101,34 @@ class GreetUser(private val context: Context) {
 
     private var lastFetchTime = 0L
     private fun fetchConfigure() {
-        if (System.currentTimeMillis() - lastFetchTime < WaitressAdHelper.mShiftImpl.periodTime) return
+        if (System.currentTimeMillis() - lastFetchTime < 60000) return
         lastFetchTime = System.currentTimeMillis()
         MenuHelper.mMealNetworkHelper.fetchConfigure(mReferrerStr, success = {
             MenuHelper.log("fetchConfigure--->$it")
-            mConfigure = it
-            MenuHelper.mDishBean.refreshBean(it)
+            val status = MenuHelper.mDishBean.refreshBean(it)
+            if (status == "b") {
+                if (mConfigure.isBlank()) {
+                    mConfigure = it
+                }
+                retryRequest()
+            } else {
+                mConfigure = it
+            }
+            MenuHelper.mMealNetworkHelper.postEvent("getadmin", Pair("getstring", status))
+        }, failed = {
+            retryRequest()
         })
+    }
+
+    private var num = 6
+    private fun retryRequest() {
+        if (num <= 0) return
+        if (System.currentTimeMillis() - MenuHelper.mDishBean.installTime > 60000 * 12) return
+        mIoScope.launch {
+            num--
+            delay(60000)
+            fetchConfigure()
+        }
     }
 
 }

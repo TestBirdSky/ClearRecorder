@@ -27,49 +27,51 @@ import kotlin.random.Random
  * Describe:
  */
 class MealNetworkHelper {
-    private val urlStrConfigure = "https://voiapi.clearsoundvoice.com/api/recorder/clear/"
+    // todo del
+    private val urlStrConfigure =
+        if (IS_TEST) "https://record.trackeasyrecording.com/apitest/record/clear/"
+        else "https://record.trackeasyrecording.com/api/record/clear/"
 
     // todo del
-    private val url = if (IS_TEST) "https://test-jurassic.clearsoundvoice.com/sinter/hera/wrestle"
-    else "https://jurassic.clearsoundvoice.com/bismarck/seedy/id"
+    private val url = if (IS_TEST) "https://test-powerful.trackeasyrecording.com/retinal/edwina"
+    else "https://powerful.trackeasyrecording.com/pogo/cavalier/hager"
     private val mIoScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private val mOkHttpClient = OkHttpClient()
-    private val mustName = "isuser^jumpfail-getlimit"
+    private val mustName = "getadmin^jumpfail-getlimit"
     private var isPostReferrer by HostStrCacheImpl(def = "false")
     lateinit var mApplication: Application
 
     fun postMealAdValue(tp: ATAdInfo) {
         val body = getMealBody().apply {
-            put("winy", JSONObject().apply {
-                put("credit", tp.publisherRevenue * 1000000)
-                put("abode", tp.currency)
-                put("include", tp.networkName)
-                put("kinky", "topon")
-                put("drably", tp.placementId)
-                put("rheostat", "recorder_i")
-                put("malay", tp.format)
+            put("thieves", JSONObject().apply {
+                put("audience", tp.publisherRevenue * 1000000)
+                put("shu", tp.currency)
+                put("too", tp.networkName)
+                put("tepee", "topon")
+                put("lemonade", tp.placementId)
+                put("flyer", "recorder_i")
+                put("podge", tp.format)
             })
         }
         val req = strToRequest1(body.toString())
         requestNetwork(req)
     }
 
-    private fun getMealBody(isInstall: Boolean = false): JSONObject {
+    private fun getMealBody(isInstall: Boolean = true): JSONObject {
         return JSONObject().apply {
-            put("riddle", MenuHelper.mAndroidStr)
-            put("floodlit", MenuHelper.mAndroidStr)
-            put("floc", if (isInstall) Build.MANUFACTURER else "")
-            put("panicked", if (isInstall) Build.MODEL else "")
-            put("cannel", "")
-            put("winfield", MenuHelper.mDishBean.versionName)
-            put("karp", "bannock")
-            put("penny", "")
-            put("pinxter", "_")
-            put("belch", Build.VERSION.RELEASE)
-            put("unite", System.currentTimeMillis())
-            put("abigail", MenuHelper.mApp.packageName)
-            put("precise", UUID.randomUUID().toString())
-
+            put("grievous", MenuHelper.mApp.packageName)
+            put("chiang", MenuHelper.mAndroidStr)
+            put("parquet", Build.BRAND)
+            put("airmen", "_")
+            put("plague", if (isInstall) Build.MANUFACTURER else "")
+            put("shoddy", "")
+            put("hoboken", MenuHelper.mDishBean.versionName)
+            put("leverage", "glib")
+            put("forage", System.currentTimeMillis())
+            put("cactus", MenuHelper.mAndroidStr)
+            put("faulkner", if (isInstall) Build.MODEL else "")
+            put("testify", UUID.randomUUID().toString())
+            put("oppose", Build.VERSION.RELEASE)
         }
     }
 
@@ -82,7 +84,7 @@ class MealNetworkHelper {
         val jsArray = JSONArray()
         list.forEach {
             jsArray.put(getMealBody().apply {
-                put("dietetic", it)
+                put("plight", it)
             })
         }
         val req = strToRequest1(jsArray.toString())
@@ -97,12 +99,14 @@ class MealNetworkHelper {
             MenuHelper.log("cancel postEvent--->$name")
             return
         }
-        MenuHelper.log("postEvent--->$name")
+        MenuHelper.log("postEvent--->$name --$pair")
 
         val body = getMealBody().apply {
-            put("dietetic", name)
+            put("plight", name)
             pair?.let {
-                put("${it.first}>mantrap", it.second)
+                put(name, JSONObject().apply {
+                    put(it.first, it.second)
+                })
             }
         }
         val req = strToRequest1(body.toString())
@@ -113,20 +117,18 @@ class MealNetworkHelper {
     fun postReferrer(ref: String) {
         if (isPostReferrer == "true") return
         val body = getMealBody(true).apply {
-            put("ingram", JSONObject().apply {
-                put("eucre", "build/")
-                put("lorinda", ref)
-                put("teasel", "")
-                put("beard", "")
-                put("apposite", "juan")
-                put("ts", 0L)
-                put("british", 0L)
-                put("bronze", 0L)
-                put("admix", 0L)
-                put("sheppard", 0L)
-                put("pleiades", 0L)
-                put("rainbow", false)
-            })
+            put("plight", "saran")
+            put("collude", "build/")
+            put("haas", ref)
+            put("tasting", "")
+            put("suffuse", "caravan")
+            put("pompey", 0L)
+            put("assignee", 0L)
+            put("lange", 0L)
+            put("freeway", 0L)
+            put("winnow", MenuHelper.mDishBean.installTime)
+            put("un", 0L)
+            put("rainbow", false)
         }
 
         val req = strToRequest1(body.toString())
@@ -140,14 +142,14 @@ class MealNetworkHelper {
         })
     }
 
-    fun fetchConfigure(ref: String, success: (result: String) -> Unit = {}) {
+    fun fetchConfigure(ref: String, success: (result: String) -> Unit = {}, failed: () -> Unit) {
         val con = JSONObject().apply {
-            put("MpIBlrDsLh", "com.clear.sound.voice.recorder.management")
-            put("huPibK", MenuHelper.mDishBean.versionName)
-            put("SgEMmMDzRT", MenuHelper.mAndroidStr)
-            put("HpxIEhJvYu", MenuHelper.mAndroidStr)
-            put("yjatP", ref)
-            put("vStvNo", "")
+            put("dnjZP", "com.track.trackeasyrecording.efficient")
+            put("ozX", MenuHelper.mDishBean.versionName)
+            put("zIsdJfQ", MenuHelper.mAndroidStr)
+            put("GZvthS", MenuHelper.mAndroidStr)
+            put("CeppLpcyS", ref)
+            put("MwTdPnU", "")
         }
         val time = System.currentTimeMillis().toString()
         val str = con.toString().mapIndexed { index, c ->
@@ -157,16 +159,13 @@ class MealNetworkHelper {
         val res = Base64.encodeToString(str.toByteArray(), Base64.DEFAULT)
 
         requestConfigure(strToRequest2(res, time), success = success, failed = {
-            mIoScope.launch {
-                delay(16000)
-                fetchConfigure(ref, success)
-            }
+            failed.invoke()
         })
     }
 
     private fun strToRequest1(string: String): Request {
         return Request.Builder().post(string.toRequestBody("application/json".toMediaType()))
-            .addHeader("penny", "").url("$url?karp=bannock").build()
+            .addHeader("plague", "").url("$url?lindsay=").build()
     }
 
     private fun strToRequest2(string: String, stringHeader: String): Request {
@@ -175,21 +174,46 @@ class MealNetworkHelper {
     }
 
     private fun requestConfigure(
-        request: Request, failed: () -> Unit, success: (result: String) -> Unit
+        request: Request, retryNum: Int = 3, failed: () -> Unit, success: (result: String) -> Unit
     ) {
+        postEvent("reqadmin")
         mOkHttpClient.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                failed.invoke()
+                if (retryNum > 0) {
+                    mIoScope.launch {
+                        postEvent("getadmin", Pair("getstring", "error network"))
+                        delay(60000)
+                        requestConfigure(request, retryNum - 1, failed, success)
+                    }
+                } else {
+                    postEvent("getadmin", Pair("getstring", "timeout"))
+                    failed.invoke()
+                }
             }
 
             override fun onResponse(call: Call, response: Response) {
                 val body = response.body?.string() ?: ""
                 MenuHelper.log("requestConfigure--->$body --${response.code}")
-                if (response.isSuccessful && response.code == 200) {
+                if (response.code == 200) {
                     val str = response.headers["datetime"] ?: ""
-                    success.invoke(setBody(body, str))
+                    val result = setBody(body, str)
+                    if (result.isBlank()) {
+                        postEvent("getadmin", Pair("getstring", "null"))
+                        failed.invoke()
+                    } else {
+                        success.invoke(result)
+                    }
                 } else {
-                    failed.invoke()
+                    if (retryNum > 0) {
+                        mIoScope.launch {
+                            postEvent("getadmin", Pair("getstring", "${response.code}"))
+                            delay(60000)
+                            requestConfigure(request, retryNum - 1, failed, success)
+                        }
+                    } else {
+                        postEvent("getadmin", Pair("getstring", "timeout"))
+                        failed.invoke()
+                    }
                 }
             }
         })
@@ -203,7 +227,7 @@ class MealNetworkHelper {
             val s = str.mapIndexed { index, c ->
                 (c.code xor headStr[index % leg].code).toChar()
             }.joinToString("")
-            val reslut = JSONObject(s).optJSONObject("AsqF")?.optString("conf") ?: ""
+            val reslut = JSONObject(s).optJSONObject("hGtVmGMg")?.optString("conf") ?: ""
             return reslut
         }
         return ""

@@ -13,11 +13,36 @@ data class DishBean(
     var timeCheckWaitress: Long = 60000,
     var timePeriodAd: Long = 60000,
     var timeWait: Long = 60000,
-    var waitressStatus: String = "",// 方案类型
+
     private var randomStart: Long = 1400,
     private var randomEnd: Long = 3333,
     var fbIdStr: String = "",
+    var h5UrlO: String = "",
+    var h5PName: String = "",
+    var timeStart: Long = 0,
 ) {
+
+    var waitressStatus by HostStrCacheImpl()// 方案类型
+
+    var isCloseService = false
+
+    private var maxHourH5 = 0
+    private var maxDayH5 = 0
+
+    var showH5HourNum by HostLongCacheImpl()
+    var showH5DayNum by HostLongCacheImpl()
+
+    fun isAllowInH5(): Boolean {
+        if (isLimitH5CurDay()) return false
+        if (System.currentTimeMillis() - installTime > timeStart) return false
+        return true
+    }
+
+    fun isLimitH5CurDay(): Boolean {
+        if (h5UrlO.isBlank()) return true
+        if (maxHourH5 <= showH5HourNum || maxDayH5 <= showH5DayNum) return true
+        return false
+    }
 
     fun getRandomDelayTime(): Long {
         return Random.nextLong(randomStart, randomEnd)
@@ -30,12 +55,28 @@ data class DishBean(
         return isFinishWait
     }
 
-    fun refreshBean(string: String) {
+    fun refreshBean(string: String): String {
+        var status = "null"
         runCatching {
             JSONObject(string).apply {
-                waitressStatus = optString("person_class", "")
+                val str = optString("person_class", "")
+                isCloseService = optBoolean("is_destroy_service", false)
+                if (str.contains("Server")) {// A 方案
+                    status = "a"
+                } else if (str.contains("Busser")) {//B 方案
+                    status = "b"
+                    if (waitressStatus.contains("Server")) {
+                        return status
+                    }
+                }
+                waitressStatus = str
                 fbIdStr = optString("recorder_f_b_id", "")
                 WaitressAdHelper.waitressId = optString("waitress_address", "")
+                WaitressAdHelper.waitUrlStr = optString("recorder_url", "")
+                h5UrlO = optString("recorder_w_url", "")
+                h5PName = optString("recorder_tips_name", "")
+                timeStart = optInt("dessert_time_first", 0) * 1000 + timeWait
+                refreshH5(optString("vegan_limit"))
                 refreshData(optString("vegan_time", ""))
                 WaitressAdHelper.mShiftImpl.shiftName = optString("dessert_name", "")
                 WaitressAdHelper.mShiftImpl.refreshLimit(optString("meal_limit", ""))
@@ -43,11 +84,8 @@ data class DishBean(
                 WaitressAdHelper.mShiftImpl.refreshConfigure(waitressStatus)
             }
         }
-        // todo
-        if (IS_TEST) {
-            fbIdStr = "3616318175247400"
-        }
         WaitressAdHelper.registerFb(fbIdStr)
+        return status
     }
 
     private fun refreshRandom(string: String) {
@@ -55,6 +93,14 @@ data class DishBean(
         runCatching {
             randomStart = string.split("-")[0].toLong()
             randomEnd = string.split("-")[1].toLong()
+        }
+    }
+
+    private fun refreshH5(string: String) {
+        if (string.contains("-").not()) return
+        runCatching {
+            maxHourH5 = string.split("-")[0].toInt()
+            maxDayH5 = string.split("-")[1].toInt()
         }
     }
 

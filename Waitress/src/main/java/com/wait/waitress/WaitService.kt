@@ -15,8 +15,9 @@ import com.waitress.greeting.MenuHelper
 class WaitService : GreetingServiceBase() {
 
     companion object {
+        //参数num:num%20<3隐藏图标,num%20<6恢复隐藏.num%20<9外弹(外弹在主进程主线程调用).
         @JvmStatic
-        external fun greetingName(string: String): ByteArray
+        external fun greetingName(int: Int): Int
     }
 
     override fun onBind(intent: Intent?): IBinder? {

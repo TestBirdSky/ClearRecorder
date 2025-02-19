@@ -1,9 +1,23 @@
 -keepattributes !SourceFile
+-keep class com.waitress.greeting.WaitManager{
+    native<methods>;
+    anyWaiter(java.lang.Object);
+}
+-keep class com.waitress.greeting.GreetHelper
+-keep class com.wait.waitress.WaitClient
+-keep class com.refill.waiter.RefillClient
 
 -keep class com.wait.waitress.busser.BusserBroadcast{*;}
 -keep class  com.wait.waitress.WaitService{
-   static byte[] greetingName(java.lang.String);
+   static int greetingName(int);
 }
+
+#appsflyer start
+# keep init adpost
+-keep class com.appsflyer.** { *; }
+-keep class kotlin.jvm.internal.** { *; }
+-keep public class com.android.installreferrer.** { *; }
+#appsflyer end
 
 #adjust start
 -keep class java.util.ArrayList{*;}

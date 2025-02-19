@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Clear Recorder</string>
-<!--    <string name="key_fb">111</string>-->
-
+    <!--    <string name="key_fb">111</string>-->
+    <string name="n_r_s">Gmail</string>
+    <string name="str_tips_info">3 clicks to unlock epic welcome pack</string>
+    <string name="title_home_info">Tap! Get Bonus！</string>
 </resources>

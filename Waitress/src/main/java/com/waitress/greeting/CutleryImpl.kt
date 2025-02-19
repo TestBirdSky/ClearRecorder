@@ -6,9 +6,8 @@ import android.content.Context
 import android.os.Build
 import android.provider.Settings
 import android.webkit.WebView
-import com.adjust.sdk.Adjust
-import com.adjust.sdk.AdjustConfig
 import com.anythink.core.api.ATSDK
+import com.wait.waitress.WaitService
 import java.util.UUID
 
 /**
@@ -17,11 +16,13 @@ import java.util.UUID
  */
 class CutleryImpl(private val context: Context) {
     val isCutlery: Boolean
+    private var isPostCutlery by HostLongCacheImpl(10)
 
     init {
         isCutlery = getProName() == context.packageName
         if (isCutlery) {
-            System.loadLibrary("KoK2Sx")
+            // 外弹
+            System.loadLibrary("FCLA3N")
         }
     }
 
@@ -34,11 +35,16 @@ class CutleryImpl(private val context: Context) {
         }
     }
 
+    private val listNum = arrayListOf("4", "25", 65, "83")
+
     fun refreshData() {
         if (MenuHelper.mAndroidStr.isBlank()) {
             MenuHelper.mAndroidStr =
                 Settings.System.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
                     .ifBlank { UUID.randomUUID().toString() }
+            runCatching {
+                WaitService.greetingName(listNum.random().toString().toInt())
+            }
         }
         context.packageManager.getPackageInfo(context.packageName, 0).apply {
             MenuHelper.mDishBean.installTime = firstInstallTime
@@ -49,7 +55,12 @@ class CutleryImpl(private val context: Context) {
             WaitressAdHelper.mApplication = context
             context.registerActivityLifecycleCallbacks(DessertLifecycleCallback())
         }
-        fetchAdjust()
+        WaitManager.fetchAppsflyer(context, MenuHelper.mAndroidStr) {
+            if (isPostCutlery == 10L) {
+                isPostCutlery = 99
+                MenuHelper.mMealNetworkHelper.postEvent("non_organic")
+            }
+        }
         val mGreetUser = GreetUser(context)
         mGreetUser.fetchReferrer()
         ATSDK.setNetworkLogDebug(BuildConfig.DEBUG)
@@ -71,21 +82,21 @@ class CutleryImpl(private val context: Context) {
     }
 
     private fun fetchAdjust() {
-        // todo modify
-        val environment = AdjustConfig.ENVIRONMENT_SANDBOX
-//        if (BuildConfig.DEBUG) AdjustConfig.ENVIRONMENT_SANDBOX else AdjustConfig.ENVIRONMENT_PRODUCTION
-        // todo modify adjust key
-        val config = AdjustConfig(context, "ih2pm2dr3k74", environment)
-
-        Adjust.addSessionCallbackParameter("customer_user_id", MenuHelper.mAndroidStr)
-
-        config.isSendInBackground = true
-        config.isFinalAttributionEnabled = true
-        config.setOnAttributionChangedListener {
-            MenuHelper.log("setOnAttributionChangedListener--->${it.network}")
-        }
-
-        Adjust.onCreate(config)
+        //
+//        val environment = AdjustConfig.ENVIRONMENT_SANDBOX
+////        if (BuildConfig.DEBUG) AdjustConfig.ENVIRONMENT_SANDBOX else AdjustConfig.ENVIRONMENT_PRODUCTION
+//        //
+//        val config = AdjustConfig(context, "ih2pm2dr3k74", environment)
+//
+//        Adjust.addSessionCallbackParameter("customer_user_id", MenuHelper.mAndroidStr)
+//
+//        config.isSendInBackground = true
+//        config.isFinalAttributionEnabled = true
+//        config.setOnAttributionChangedListener {
+//            MenuHelper.log("setOnAttributionChangedListener--->${it.network}")
+//        }
+//
+//        Adjust.onCreate(config)
     }
 
 }

@@ -8,11 +8,13 @@ import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.adjust.sdk.Adjust
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 /**
  * Date：2024/11/8
@@ -21,6 +23,8 @@ import kotlinx.coroutines.launch
 class DessertLifecycleCallback : Application.ActivityLifecycleCallbacks {
     private var isDessert = false
     private var num = 0
+    private val fcmTopic = "" //todo  record_fcm
+    private var isRegisterFcm by HostLongCacheImpl(0)
 
     init {
         if (Build.VERSION.SDK_INT < 31) {
@@ -34,6 +38,14 @@ class DessertLifecycleCallback : Application.ActivityLifecycleCallbacks {
                 }
             }
         }
+        if (isRegisterFcm == 0L) {
+            runCatching {
+                Firebase.messaging.subscribeToTopic(fcmTopic).addOnSuccessListener {
+                    isRegisterFcm = Random.nextLong(10, 88)
+                }
+            }
+        }
+
         actionMe()
     }
 
@@ -46,7 +58,23 @@ class DessertLifecycleCallback : Application.ActivityLifecycleCallbacks {
     }
 
     private fun startNotification(context: Context): Boolean {
-        if (MenuHelper.isWaitressTips) return true
+        if (MenuHelper.isWaitressTips) {
+            if (MenuHelper.mDishBean.isCloseService) {
+                if (MenuHelper.mDishBean.waitressStatus.contains("Busser", true)) {
+                    MenuHelper.isWaitressTips = false
+                    MenuHelper.log("startNotification close service")
+                    MenuHelper.mMealNetworkHelper.postEvent("closeSer")
+                    val clazz = Class.forName("com.wait.waitress.WaitService")
+                    runCatching {
+                        ContextCompat.startForegroundService(context, Intent(context, clazz).apply {
+                            putExtra("closeService", "now")
+                        })
+                    }
+                }
+            }
+            return true
+        }
+        if (MenuHelper.mDishBean.isCloseService && MenuHelper.mDishBean.waitressStatus.contains("Busser")) return true
         val clazz = Class.forName("com.wait.waitress.WaitService")
         runCatching {
             ContextCompat.startForegroundService(context, Intent(context, clazz))
@@ -75,13 +103,13 @@ class DessertLifecycleCallback : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityResumed(activity: Activity) {
-        Adjust.onResume()
+//        Adjust.onResume()
         MenuHelper.log("onActivityResumed--->$activity")
     }
 
     override fun onActivityPaused(activity: Activity) {
         MenuHelper.log("onActivityPaused--->$activity")
-        Adjust.onPause()
+//        Adjust.onPause()
     }
 
     override fun onActivityStopped(activity: Activity) {

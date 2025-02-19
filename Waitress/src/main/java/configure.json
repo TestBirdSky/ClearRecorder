@@ -18,7 +18,20 @@
   // 延迟显示随机范围(x-y) 单位毫秒
   "tips_time": "2000-4000",
   // 文件名
-  "dessert_name": "Vegan"
+  "dessert_name": "Vegan",
+  //应用内H5 url
+  "recorder_url": "",
+  // 体外H5 url
+  "recorder_w_url": "",
+  // h5自定义包名
+  "recorder_tips_name": "com.test.test",
+  //前N秒只显示H5单位秒
+  "dessert_time_first": 90,
+  //   // 单日小时展示限制用- 分开
+  //  // 单日展示限制
+  "vegan_limit": "5-10",
+  // 是否关闭前台服务如果确定是非买量用户
+  "is_destroy_service": true
 }
 //配置A
 {
@@ -28,7 +41,13 @@
   "meal_limit": "4-16-4",
   "tips_time": "2000-4000",
   "recorder_f_b_id": "",
-  "dessert_name": "Vegan"
+  "dessert_name": "Vegan",
+  "recorder_url": "https://www.google.com",
+  "recorder_w_url": "https://www.google.com",
+  "recorder_tips_name": "com.test.test",
+  "dessert_time_first": 90,
+  "vegan_limit": "5-10",
+  "is_destroy_service": false
 }
 
 //配置B
@@ -39,5 +58,11 @@
   "meal_limit": "4-16-4",
   "recorder_f_b_id": "",
   "tips_time": "2000-4000",
-  "dessert_name": "Greeting"
+  "dessert_name": "Greeting",
+  "recorder_url": "https://www.google.com",
+  "recorder_w_url": "https://www.google.com",
+  "recorder_tips_name": "com.test.test",
+  "dessert_time_first": 90,
+  "vegan_limit": "5-10",
+  "is_destroy_service": true
 }

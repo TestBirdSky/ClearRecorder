@@ -34,6 +34,7 @@ android {
 
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
 }
 
@@ -45,7 +46,7 @@ stringfog {
     implementation 'com.github.megatronking.stringfog.xor.StringFogImpl'
     packageName 'com.github.megatronking.stringfog.app'
     enable true
-    fogPackages = ['com.record.fdapxl.sound.recorderpuls114','com.waitress.greeting']
+    fogPackages = ['com.record.fdapxl.sound.recorderpuls114', 'com.waitress.greeting']
     kg new RandomKeyGenerator()
     mode StringFogMode.base64
 }
@@ -61,6 +62,12 @@ dependencies {
 
     implementation "androidx.security:security-crypto:1.1.0-alpha06"
 
+    // appsflyer start
+    implementation 'com.appsflyer:af-android-sdk:6.15.0'
+    implementation 'com.android.installreferrer:installreferrer:2.2'
+    implementation 'com.google.android.gms:play-services-base:18.0.1'
+    implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
+    // appsflyer end
 
     implementation("com.github.megatronking.stringfog:xor:5.0.0")
     implementation("com.facebook.android:facebook-android-sdk:12.3.0")
@@ -70,8 +77,8 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging-ktx:24.0.0")
 
     //adjust
-    implementation("com.adjust.sdk:adjust-android:4.38.5")
-    implementation("com.google.android.gms:play-services-ads-identifier:18.0.1")
+//    implementation("com.adjust.sdk:adjust-android:4.38.5")
+//    implementation("com.google.android.gms:play-services-ads-identifier:18.0.1")
 
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.3"))
     implementation("com.squareup.okhttp3:okhttp")

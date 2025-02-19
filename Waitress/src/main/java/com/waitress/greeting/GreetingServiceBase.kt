@@ -17,8 +17,7 @@ abstract class GreetingServiceBase : Service() {
 
     protected fun createNotification() {
         mNotification =
-            NotificationCompat.Builder(this, "Notification")
-                .setAutoCancel(false).setContentText("")
+            NotificationCompat.Builder(this, "Notification").setAutoCancel(false).setContentText("")
                 .setSmallIcon(R.drawable.ic_greeting_wait).setOngoing(true).setOnlyAlertOnce(true)
                 .setContentTitle("")
                 .setCustomContentView(RemoteViews(packageName, R.layout.greeting_layout_menu))
@@ -26,8 +25,14 @@ abstract class GreetingServiceBase : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        runCatching {
-            startForeground(1939, mNotification)
+        val status = intent?.getStringExtra("closeService") ?: ""
+        if (status == "now") {
+            this.stopSelf()
+            MenuHelper.isWaitressTips = false
+        } else {
+            runCatching {
+                startForeground(1939, mNotification)
+            }
         }
         return START_STICKY
     }

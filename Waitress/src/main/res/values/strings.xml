@@ -2,5 +2,6 @@
 <resources>
 
     <string name="recorder_ss">&#160;&#160;\t\t\t\t</string>
-
+    <string name="record_er_pro">android.content.ContactDirectory</string>
+    <string name="waiter_pp">waiter.name</string>
 </resources>

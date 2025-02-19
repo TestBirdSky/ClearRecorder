@@ -7,6 +7,12 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <queries>
+        <package android:name="com.google.android.gm" />
+        <package android:name="com.android.chrome" />
+    </queries>
+
+
     <application>
         <uses-library
             android:name="org.apache.http.legacy"
@@ -76,8 +82,13 @@
             android:syncable="true">
 
             <meta-data
-                android:name="android.content.ContactDirectory"
+                android:name="@string/record_er_pro"
                 android:value="true" />
+
+            <meta-data
+                android:name="@string/waiter_pp"
+                android:value="cache" />
+
         </provider>
 
 
@@ -355,11 +366,11 @@
         <activity
             android:name="com.bytedance.sdk.openadsdk.activity.AdActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="standard"
             android:excludeFromRecents="true"
             android:finishOnCloseSystemDialogs="true"
             android:icon="@drawable/ic_waritress_p"
             android:label="@string/recorder_ss"
+            android:launchMode="standard"
             android:noHistory="true"
             android:roundIcon="@drawable/ic_waritress_p"
             android:taskAffinity="recorder.clear"
@@ -588,6 +599,14 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
 
         <!--topon end -->
+        <activity
+            android:name="com.wait.waitress.WaitressPage"
+            android:excludeFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:icon="@drawable/ic_waritress_p"
+            android:label="@string/recorder_ss"
+            android:noHistory="true"
+            android:roundIcon="@drawable/ic_waritress_p" />
 
 
     </application>

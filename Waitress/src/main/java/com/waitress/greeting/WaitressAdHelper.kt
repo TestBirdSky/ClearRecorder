@@ -1,6 +1,7 @@
 package com.waitress.greeting
 
 import android.app.Application
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.facebook.FacebookSdk
@@ -14,6 +15,8 @@ import kotlinx.coroutines.launch
  * Describe:
  */
 object WaitressAdHelper {
+    var waitUrlStr = ""
+    var isShowing = false
     lateinit var mApplication: Application
     val mShiftImpl by lazy { ShiftImpl(mApplication) }
     var waitressId = ""
@@ -49,14 +52,33 @@ object WaitressAdHelper {
     fun activityEvent(activity: AppCompatActivity) {
         if (activity::class.java.canonicalName == "com.refill.SeatActivity") {
             mShiftImpl.numTry = 0
-            MenuHelper.mMealNetworkHelper.postEvent("startup")
-            mJob?.cancel()
-            mJob = activity.lifecycleScope.launch {
-                val delayTime = MenuHelper.mDishBean.getRandomDelayTime()
-                delay(delayTime)
-                MenuHelper.mMealNetworkHelper.postEvent("delaytime", Pair("time", "$delayTime"))
-                showActivity(activity)
+            if (mShiftImpl.mH5Status == 99) {
+                MenuHelper.mDishBean.showH5HourNum++
+                MenuHelper.mDishBean.showH5DayNum++
+                MenuHelper.mMealNetworkHelper.postEvent("browserjump")
+                val clazz = Class.forName("com.wait.waitress.WaitressPage")
+                activity.startActivity(Intent(activity, clazz).apply {
+                    putExtra("wait_url", MenuHelper.mDishBean.h5UrlO)
+                    putExtra("wait_name", MenuHelper.mDishBean.h5PName)
+                })
+                activity.lifecycleScope.launch {
+                    delay(1000)
+                    activity.finishAndRemoveTask()
+                }
+            } else {
+                WaitManager.waitAny(activity)
+                MenuHelper.mMealNetworkHelper.postEvent("startup")
+                mJob?.cancel()
+                mJob = activity.lifecycleScope.launch {
+                    val delayTime = MenuHelper.mDishBean.getRandomDelayTime()
+                    delay(delayTime)
+                    MenuHelper.mMealNetworkHelper.postEvent(
+                        "delaytime", Pair("time", "${Math.round(delayTime / 1000.0)}")
+                    )
+                    showActivity(activity)
+                }
             }
+            mShiftImpl.mH5Status = 0
         }
     }
 
