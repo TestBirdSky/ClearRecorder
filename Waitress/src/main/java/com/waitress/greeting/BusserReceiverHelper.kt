@@ -9,7 +9,7 @@ import android.content.Intent
  * Describe:
  */
 class BusserReceiverHelper {
-    private val timeType = arrayListOf("P", "p", "P")
+    private val timeType = arrayListOf("M", "m")
 
     fun action(context: Context, intent: Intent) {
         if (intent.hasExtra(timeType[0].uppercase())) {

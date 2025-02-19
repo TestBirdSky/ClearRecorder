@@ -24,7 +24,7 @@ class ShiftImpl(private val context: Context) {
     var shiftName = ""// 文件名
     var numTry by HostLongCacheImpl(type = 100)
     private val oneHour = 60000 * 60L
-    private var lastShowAdTime: Long = 0
+    var lastShowAdTime: Long = 0
 
     private var splashShowNum by HostLongCacheImpl(type = 100) // 小时
     private var homeShowNum by HostLongCacheImpl(type = 100) // 天
@@ -239,12 +239,11 @@ class ShiftImpl(private val context: Context) {
     }
 
     fun waitShowH5() {
-        if (mH5Status == 100) return
         mMainScope.launch {
             ArrayList(mActivityList).forEach {
                 it.finishAndRemoveTask()
             }
-            delay(500)
+            delay(800)
             MenuHelper.menuClose()
         }
     }

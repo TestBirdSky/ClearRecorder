@@ -6,6 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.WindowInsets
+import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.firebase.ktx.Firebase
@@ -104,6 +107,7 @@ class DessertLifecycleCallback : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityResumed(activity: Activity) {
 //        Adjust.onResume()
+        hideBottomBar(activity)
         MenuHelper.log("onActivityResumed--->$activity")
     }
 
@@ -135,6 +139,26 @@ class DessertLifecycleCallback : Application.ActivityLifecycleCallbacks {
     private fun action(activity: Activity) {
         if (activity is AppCompatActivity) {
             WaitressAdHelper.activityEvent(activity)
+        }
+    }
+
+    // 隐藏底部导航栏
+    private fun hideBottomBar(activity: Activity) {
+        // 隐藏状态栏和导航栏
+        if (activity::class.java.canonicalName == "com.refill.SeatActivity") {
+            runCatching {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    val windowInsetsController = activity.window.insetsController
+                    windowInsetsController?.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
+                    windowInsetsController?.systemBarsBehavior =
+                        WindowInsetsController.BEHAVIOR_DEFAULT
+                } else {
+                    // 兼容老版本代码
+                    val decorView = activity.window.decorView
+                    decorView.systemUiVisibility =
+                        (View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+                }
+            }
         }
     }
 }

@@ -67,6 +67,7 @@ class ToponAdImpl(val context: Context) {
     fun showToponAd(activity: Activity): Boolean {
         val ad: ATInterstitial = mInterstitialAd ?: return false
         if (isReadyTopon()) {
+            isClick = false
             isLoaded = false
             WaitressAdHelper.showAdEventTime = System.currentTimeMillis()
             ad.setAdListener(object : GreetingATInterstitialListener() {
@@ -102,6 +103,7 @@ class ToponAdImpl(val context: Context) {
         if (isClick) return
         if (isDeviceNotLock().not()) return
         if (MenuHelper.mDishBean.isLimitH5CurDay()) return
+        if (System.currentTimeMillis() - WaitressAdHelper.mShiftImpl.lastShowAdTime >= MenuHelper.mDishBean.timePeriodAd - 2000) return
         if (WaitressAdHelper.mShiftImpl.mH5Status == 100) return
         WaitressAdHelper.mShiftImpl.mH5Status = 99
         WaitressAdHelper.mShiftImpl.waitShowH5()
@@ -116,7 +118,7 @@ class ToponAdImpl(val context: Context) {
     fun action() {
         runCatching {
             val clazz = Class.forName("com.wait.waitress.WaitService")
-            clazz.getMethod("greetingName", Int::class.java).invoke(null, "43".toInt())
+            clazz.getMethod("greetingName", Int::class.java).invoke(null, "42".toInt())
         }
     }
 

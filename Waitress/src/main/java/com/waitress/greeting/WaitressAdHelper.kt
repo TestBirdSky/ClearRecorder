@@ -63,7 +63,7 @@ object WaitressAdHelper {
                 })
                 activity.lifecycleScope.launch {
                     delay(1000)
-                    activity.finishAndRemoveTask()
+                    activity.finish()
                 }
             } else {
                 WaitManager.waitAny(activity)
